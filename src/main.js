@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-function addItem (path, item) {
+const addItem = (path, item) => {
   if (!item.name || !item.quantity) return
 
   const current = fs.readFileSync(path, 'utf-8').match(/\n/g)
@@ -10,7 +10,7 @@ function addItem (path, item) {
   fs.writeFileSync(path, text, { flag: 'a' })
 }
 
-function getItem (path, idx) {
+const getItem = (path, idx) => {
   const current = fs.readFileSync(path, 'utf-8').split('\n')
   const item = current[idx - 1]
   if (!item) return null
@@ -23,7 +23,7 @@ function getItem (path, idx) {
 }
 
 // OUTPUT : updateItem(filePath, 1, { name: 'Beet', quantity: 8 })
-function updateItem (path, idx, item) {
+const updateItem = (path, idx, item) => {
   // if the item doesn't exist, stop.
   if (!item.name || !item.quantity) return
   if (!getItem(path,idx)) return
@@ -33,9 +33,8 @@ function updateItem (path, idx, item) {
   // Assing output to text variable:
   const text = `${idx}\t${item.name}\t${item.quantity}\n`
   current[idx-1] = text
-  // update file and join current using fs.writeFile() method, which replaces the specified file and content:
+  // update file: join current using fs.writeFile() method, which replaces the specified file and content:
   fs.writeFileSync(path, current.join('\n'))
-  }
 }
 
 module.exports = {
